@@ -2,13 +2,17 @@ let num = gerarnumeroAleat()
 let qntd = 1
 
 
-function telaInicial(seletor, mensagem) {
+function passarMensagem(seletor, mensagem) {
     let tag = document.querySelector(seletor)
     tag.innerHTML = (mensagem)
 
 }
-telaInicial("h1", "Jogo da Advinhação")
-telaInicial("p", "Escolha um número de 1 a 10:")
+function telaInicial() {
+    passarMensagem("h1", "Jogo da Advinhação")
+    passarMensagem("p", "Escolha um número de 1 a 10:")
+}
+telaInicial()
+
 
 
 function gerarnumeroAleat() {
@@ -21,15 +25,17 @@ function verificarChute() {
     let palavraTentativa = qntd == 1 ? "tentativa" : "tentativas"
     if (chute == num) {
         limparinput()
-        telaInicial("h1", "Parabéns!")
-        telaInicial("p", `Você acertou em ${qntd} ${palavraTentativa}`)
+        novoJogo()
+        passarMensagem("h1", "Parabéns!")
+        passarMensagem("p", `Você acertou em ${qntd} ${palavraTentativa}`)
     } else {
+        novoJogo()
         qntd += 1
         limparinput()
         if (chute > num) {
-            telaInicial("p", "O número é menor...")
+            passarMensagem("p", "O número é menor...")
         } else {
-            telaInicial("p", "O número é maior...")
+            passarMensagem("p", "O número é maior...")
         }
     }
 
@@ -39,3 +45,13 @@ function limparinput() {
     document.querySelector("input").value = ""
 }
 
+function novoJogo() {
+    document.getElementById("reiniciar").removeAttribute("disabled")
+}
+
+function reiniciarJogo() {
+    num = gerarnumeroAleat()
+    qntd = 1
+    limparinput()
+
+}
