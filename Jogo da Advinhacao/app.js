@@ -1,58 +1,51 @@
+let numero = gerarNumero()
+let tentativa = 1
 
+function telaInicial(seletor, texto) {
+    let mensagem = document.querySelector(seletor)
+    mensagem.innerHTML = texto
 
-let numeroAleat = numeroAleatorio()
-let qntdTentativa = 1
-
-
-
-
-function mostrarNaTela(seletor, texto) {
-    let tag = document.querySelector(seletor)
-    tag.innerHTML = (texto)
 }
-
-function telaInicial() {
-    mostrarNaTela("h1", "Jogo da advinhação")
-    mostrarNaTela("p", "Chute um número de 1 a 10:")
+function mensagemPadrao() {
+    telaInicial("h1", "Jogo da advinhação")
+    telaInicial("p", "Chute um número de 1 a 10: ")
 }
-telaInicial()
+mensagemPadrao()
 
-
-function verificarChute() {
-    let tentativa = qntdTentativa > 1 ? "tentativas" : "tentativa"
-    let mensagemTentativa = `Você acertou em ${qntdTentativa} ${tentativa} `
-    let chute = document.querySelector("input").value
-    if (chute == numeroAleat) {
-        mostrarNaTela("h1", "Parabéns!")
-        mostrarNaTela(`p`, `${mensagemTentativa}`)
-        document.getElementById("reiniciar").removeAttribute("disabled")
-    } else {
-        limparInput()
-        document.getElementById("reiniciar").removeAttribute("disabled")
-        if (chute > numeroAleat) {
-            mostrarNaTela("p", "O número é menor!")
-        } else {
-            mostrarNaTela("p", "O número é maior!")
-        }
-        qntdTentativa += 1
-    }
-}
-function numeroAleatorio() {
+function gerarNumero() {
     return parseInt(Math.random() * 11)
 }
 
+function verificarChute() {
+    let chute = document.querySelector("input").value
+    let mensagemTentativa = tentativa == 1 ? "tentativa" : "tentativas"
+    if (chute == numero) {
+        telaInicial("p", `Parabéns, você acertou em ${tentativa} ${mensagemTentativa}`)
+        limparInput()
+    } else {
+        document.getElementById("reiniciar").removeAttribute("disabled")
+        tentativa += 1
+        limparInput()
+        if (chute > numero) {
+            telaInicial("p", "O número é menor")
+        } else {
+            telaInicial("p", "O número é maior")
+        }
+    }
+}
 
 
 function limparInput() {
-    let chute = document.querySelector("input")
-    chute.value = ""
+    document.querySelector("input").value = ""
+
 }
 
 function reiniciarJogo() {
-    numeroAleat = numeroAleatorio()
-    qntdTentativa = 1
-    telaInicial()
+    tentativa = 1
+    mensagemPadrao()
     limparInput()
+    numero = gerarNumero()
     document.getElementById("reiniciar").setAttribute("disabled", true)
+
 
 }
