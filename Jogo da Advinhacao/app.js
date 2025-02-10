@@ -4,6 +4,8 @@ let tentativa = 1
 function telaInicial(seletor, texto) {
     let mensagem = document.querySelector(seletor)
     mensagem.innerHTML = texto
+    responsiveVoice.speak(texto, "Brazilian Portuguese Female", { rate: 1.2 })
+
 
 }
 function mensagemPadrao() {
@@ -39,7 +41,6 @@ function limparInput() {
     document.querySelector("input").value = ""
 
 }
-
 function reiniciarJogo() {
     tentativa = 1
     mensagemPadrao()
